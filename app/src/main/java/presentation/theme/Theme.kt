@@ -1,4 +1,4 @@
-package ambersimsdev.myadventuregame.ui.theme
+package presentation.theme
 
 import android.app.Activity
 import android.os.Build

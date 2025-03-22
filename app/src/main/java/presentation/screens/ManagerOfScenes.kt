@@ -1,4 +1,4 @@
-package ambersimsdev.myadventuregame
+package presentation.screens
 
 data class PrepQuestion(
     val id: Int,

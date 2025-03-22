@@ -1,6 +1,7 @@
-package ambersimsdev.myadventuregame.ui
+package presentation.screens
 
-import ambersimsdev.myadventuregame.ui.nav.Screen
+import ambersimsdev.myadventuregame.R
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,18 +16,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import data.User
 
 @Composable
 fun welcomeScreen(navController: NavController) {
+
     val name = remember { mutableStateOf("") }
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(16.dp), verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
+        Image(painter = painterResource(id = R.drawable.empty_street_bro), contentDescription = "Image of city with trees." )
         Text(text = "Welcome! Let's start with a name!", color = Color.White)
         Spacer(modifier = Modifier.padding(16.dp))
         OutlinedTextField(value = name.value , onValueChange = {
@@ -36,6 +42,7 @@ fun welcomeScreen(navController: NavController) {
             if(
                 name.value.isNotBlank()){
             navController.navigate("Screen.PrepScreen/${name.value}")
+                User.addToScore()
             }
          }
         ){

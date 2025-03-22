@@ -1,7 +1,7 @@
-package ambersimsdev.myadventuregame.ui.nav
+package presentation.navigation
 
-import ambersimsdev.myadventuregame.ui.prepScreen
-import ambersimsdev.myadventuregame.ui.welcomeScreen
+import presentation.screens.prepScreen
+import presentation.screens.welcomeScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable

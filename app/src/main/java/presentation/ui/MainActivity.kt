@@ -1,7 +1,7 @@
-package ambersimsdev.myadventuregame
+package presentation.ui
 
 
-import ambersimsdev.myadventuregame.ui.nav.appNav
+import presentation.navigation.appNav
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import ambersimsdev.myadventuregame.ui.theme.MyAdventureGameTheme
+import presentation.theme.MyAdventureGameTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

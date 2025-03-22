@@ -1,6 +1,8 @@
-package ambersimsdev.myadventuregame
+package data
 
-object PrepSceneConstant {
+import presentation.screens.PrepQuestion
+
+object PrepQuestionsData { //TODO call prep
     fun getPrepQuestions(): ArrayList<PrepQuestion> {
         val questionList = ArrayList<PrepQuestion>()
         //ONE
@@ -13,9 +15,10 @@ object PrepSceneConstant {
         questionList.add(inquiryTwo)
 
         //TWO
-        val inquiryThree =PrepQuestion(3, "Do you consider yourself street smart?",
-            "Yes.", "No.", "Alrighty then! Next question!")
+        val inquiryThree = PrepQuestion(3, "Do you consider yourself street smart?",
+            "Yes.", "No.", "All done! Time to begin! ")
         questionList.add(inquiryThree)
+
 
         return questionList
 

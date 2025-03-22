@@ -1,4 +1,4 @@
-package ambersimsdev.myadventuregame.ui.nav
+package presentation.navigation
 
 sealed class Screen (val route: String) {
 
