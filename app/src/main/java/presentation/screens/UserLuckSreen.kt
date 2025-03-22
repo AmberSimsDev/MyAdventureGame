@@ -13,19 +13,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import data.EventData
 
 @Composable
-fun actionScreen (){
+fun userLuckScreen (){
     Column(modifier= Modifier
         .fillMaxSize()
         .padding(16.dp), verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally){
 
-       Text(text = " Insert ACTION question here", color = Color.White, modifier = Modifier.padding(32.dp))
+       Text(text = EventData.getLuckyEvent(), color = Color.White, modifier = Modifier.padding(32.dp))
        // Image(imageVector = , contentDescription = "Photograph of Madrid " )
 
         //INTRODUCING BUTTONS
         //BUTTON NUMBER 1
+
         Button(onClick = { /*TODO*/ },modifier= Modifier.padding(8.dp), shape = RectangleShape) {
             Text( text= "Choice number one")
         }
@@ -46,5 +48,5 @@ fun actionScreen (){
 @Preview
 @Composable
 fun actionScreenPreview(){
-    actionScreen()
+    userLuckScreen()
 }

@@ -2,11 +2,11 @@ package presentation.navigation
 
 sealed class Screen (val route: String) {
 
-    object WelcomeScreen: Screen("welcomeScreen")
+    data object WelcomeScreen: Screen("WelcomeScreen")
 
-    object PrepScreen : Screen("prepScreen /{name}")
+    data object PrepScreen : Screen("PrepScreen")
 
-    object actionScreen: Screen("actionScreen")
+    data object UserLuckScreen: Screen("UserLuckScreen")
 
 
 }

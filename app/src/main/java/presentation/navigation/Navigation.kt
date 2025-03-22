@@ -6,18 +6,22 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import presentation.screens.userLuckScreen
 
 @Composable
-fun appNav(){
+fun appNav() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "Screen.welcomeScreen", builder = {
-        composable("Screen.welcomeScreen") {
+    NavHost(navController = navController, startDestination = Screen.WelcomeScreen.route, builder = {
+        composable(Screen.WelcomeScreen.route) {
             welcomeScreen(navController)
         }
-        composable("Screen.prepScreen/{name}"){
-            val name = it.arguments?.getString("name")
-            prepScreen(name ="$name")
-            }
+        composable(Screen.PrepScreen.route) {
+
+            prepScreen()
+        }
+        composable(Screen.UserLuckScreen.route){
+            userLuckScreen()
+        }
 
     })
 

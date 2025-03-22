@@ -23,29 +23,36 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import data.User
+import presentation.navigation.Screen
 
 @Composable
 fun welcomeScreen(navController: NavController) {
-
-    val name = remember { mutableStateOf("") }
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp), verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(painter = painterResource(id = R.drawable.empty_street_bro), contentDescription = "Image of city with trees." )
+    val currentName = User.getName()
+    val name = remember { mutableStateOf(currentName) }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp), verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.empty_street_bro),
+            contentDescription = "Image of city with trees."
+        )
         Text(text = "Welcome! Let's start with a name!", color = Color.White)
         Spacer(modifier = Modifier.padding(16.dp))
-        OutlinedTextField(value = name.value , onValueChange = {
-            name.value = it })
+        OutlinedTextField(value = name.value, onValueChange = { newName ->
+            name.value = newName
+            User.setName(newName)
+        })
         Spacer(modifier = Modifier.padding(16.dp))
-        Button(onClick ={
-            if(
-                name.value.isNotBlank()){
-            navController.navigate("Screen.PrepScreen/${name.value}")
-                User.addToScore()
+        Button(onClick = {
+            if (
+                name.value.isNotBlank()) {
+                navController.navigate(Screen.PrepScreen.route)
             }
-         }
-        ){
+        }
+        ) {
             Text(text = "Ready")
 
         }
@@ -53,8 +60,9 @@ fun welcomeScreen(navController: NavController) {
 
 
 }
+
 @Preview
 @Composable
-fun welcomeScreenPreview(){
+fun welcomeScreenPreview() {
     welcomeScreen(navController = rememberNavController())
 }

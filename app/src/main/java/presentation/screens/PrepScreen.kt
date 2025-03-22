@@ -32,7 +32,7 @@ import data.User
 const val ClassName = "PrepScreen"
 
 @Composable
-fun prepScreen(name: String) {
+fun prepScreen() {
     //SCREEN LOGIC
     //LIST LOGIC
     Log.w(ClassName, ">>>>>>Your score is ${User.getScore()}")
@@ -51,7 +51,7 @@ fun prepScreen(name: String) {
     ) {
         if (!isReady) { //THIS IS ONLYYYYYY WHAT WILL BE DISPLAYED
             Text(
-                text = "Now, just a few questions before we begin, $name!",
+                text = "Now, just a few questions before we begin, ${User.getName()}!",
                 color = Color.White,
                 modifier = Modifier.padding(32.dp)
             )
@@ -110,7 +110,7 @@ fun prepScreen(name: String) {
 @Preview
 @Composable
 fun prepScreenPreview() {
-    prepScreen(name = "")
+    prepScreen()
 }
 /* OMITTED CODE
 
