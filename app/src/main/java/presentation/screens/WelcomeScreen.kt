@@ -35,6 +35,8 @@ fun welcomeScreen(navController: NavController) {
             .padding(16.dp), verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        // Image(imageVector = , contentDescription = "Photograph of Madrid " )
         Image(
             painter = painterResource(id = R.drawable.empty_street_bro),
             contentDescription = "Image of city with trees."

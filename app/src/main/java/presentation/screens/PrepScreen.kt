@@ -18,8 +18,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import data.PrepQuestionsData
 import data.User
+import presentation.navigation.Screen
 
 
 //class PrepActivity() {
@@ -32,7 +35,7 @@ import data.User
 const val ClassName = "PrepScreen"
 
 @Composable
-fun prepScreen() {
+fun prepScreen(navController: NavController) {
     //SCREEN LOGIC
     //LIST LOGIC
     Log.w(ClassName, ">>>>>>Your score is ${User.getScore()}")
@@ -70,8 +73,13 @@ fun prepScreen() {
                 //BUTTON NUMBER 1
                 Button(
                     onClick = {
-                        currentQuestionIndex++
-                        User.addToScore()
+                        if (currentQuestionIndex >= 2) {
+                            navController.navigate(Screen.UserLuckScreen.route)
+                        } else {
+                            currentQuestionIndex++
+                        }
+                        User.addTwoToScore()
+
                     },
                     modifier = Modifier.padding(8.dp),
                     shape = RectangleShape
@@ -80,7 +88,13 @@ fun prepScreen() {
                 }
                 //BUTTON NUMBER 2
                 Button(
-                    onClick = { currentQuestionIndex++ },
+                    onClick = {
+                        if (currentQuestionIndex >= 2) {
+                            navController.navigate(Screen.UserLuckScreen.route)
+                        } else {
+                            currentQuestionIndex++
+                        }
+                    },
                     modifier = Modifier.padding(8.dp),
                     shape = RectangleShape
                 ) {
@@ -110,7 +124,7 @@ fun prepScreen() {
 @Preview
 @Composable
 fun prepScreenPreview() {
-    prepScreen()
+    prepScreen(rememberNavController())
 }
 /* OMITTED CODE
 

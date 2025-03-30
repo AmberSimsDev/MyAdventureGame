@@ -17,7 +17,7 @@ fun appNav() {
         }
         composable(Screen.PrepScreen.route) {
 
-            prepScreen()
+            prepScreen(navController)
         }
         composable(Screen.UserLuckScreen.route){
             userLuckScreen()
