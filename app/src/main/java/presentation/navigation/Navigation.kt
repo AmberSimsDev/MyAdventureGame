@@ -6,7 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import presentation.screens.userLuckScreen
+import presentation.screens.eventScreenOne
+import presentation.screens.eventScreenTwo
 
 @Composable
 fun appNav() {
@@ -19,8 +20,11 @@ fun appNav() {
 
             prepScreen(navController)
         }
-        composable(Screen.UserLuckScreen.route){
-            userLuckScreen()
+        composable(Screen.EventScreenOne.route){
+            eventScreenOne(navController)
+        }
+        composable(Screen.EventScreenTwo.route){
+            eventScreenTwo(navController)
         }
 
     })

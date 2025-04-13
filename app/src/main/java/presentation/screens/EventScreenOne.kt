@@ -15,13 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import data.EventData
 import data.User
+import presentation.navigation.Screen
 
 @Composable
-fun userLuckScreen() {
+fun eventScreenOne(navController: NavController) {
     val currentScore = User.getScore()
     var buttonClicked by remember { mutableStateOf(false) }
     var luckyResult by remember {
@@ -57,10 +58,14 @@ fun userLuckScreen() {
         if (buttonClicked) {
             Text(
                 text = luckyResult,
-                color = Color.White,
+                color = Color.Yellow,
                 modifier = Modifier.padding(16.dp)
             )
-            Button(onClick = { }) {
+            Button(onClick = {
+                if (buttonClicked) {
+                    navController.navigate(Screen.EventScreenTwo.route)
+                }
+            }) {
                 Text("Continue")
             }
             Text(text = "Current Score is ${currentScore.toString()}")
@@ -72,22 +77,20 @@ fun userLuckScreen() {
                 color = Color.White,
                 modifier = Modifier.padding(32.dp)
             )
-            luckyResult = when {
-                currentScore >= 5 -> EventData.getLuckyResponseOne(0)
-                currentScore == 4 -> EventData.getNormalResponseOne(1)
-                else -> EventData.getUnluckyResponseOne(2)
-            }
 
             //BUTTON NUMBER 1
             Button(
                 onClick = {
                     buttonClicked = true
-                    if (currentScore <= 4) {
-                        User.addTwoToScore()
+                    if (currentScore <= 3) {
+                        currentScore == currentScore
+                        luckyResult = EventData.getUnluckyResponseOne(0)
                     } else if (currentScore == 4) {
                         User.addOneToScore()
+                        luckyResult = EventData.getNormalResponseOne(0)
                     } else {
-                        currentScore == currentScore
+                        luckyResult = EventData.getLuckyResponseOne(0)
+                        User.addTwoToScore()
                     }
                 }, modifier = Modifier.padding(8.dp), shape = RectangleShape
             ) {
@@ -99,10 +102,13 @@ fun userLuckScreen() {
                 buttonClicked = true
                 if (currentScore >= 5) {
                     User.addOneToScore()
+                    luckyResult = EventData.getLuckyResponseOne(1)
                 } else if (currentScore == 4) {
                     User.addOneToScore()
+                    luckyResult = EventData.getNormalResponseOne(1)
                 } else {
                     User.addOneToScore()
+                    luckyResult = EventData.getUnluckyResponseOne(1)
                 }
             }, modifier = Modifier.padding(8.dp), shape = RectangleShape) {
                 Text(text = EventData.getFlightResponses(1))
@@ -114,11 +120,14 @@ fun userLuckScreen() {
                 onClick = {
                     buttonClicked = true
                     if (currentScore >= 5) {
-                        User.addTwoToScore()
-                    } else if (currentScore == 4) {
-                        User.addOneToScore()
-                    } else {
                         currentScore == currentScore
+                        luckyResult = EventData.getLuckyResponseOne(2)
+                    } else if (currentScore == 4) {
+                        User.addTwoToScore()
+                        luckyResult = EventData.getNormalResponseOne(2)
+                    } else {
+                        User.addTwoToScore()
+                        luckyResult = EventData.getUnluckyResponseOne(2)
                     }
                 },
                 modifier = Modifier.padding(8.dp),
@@ -130,6 +139,7 @@ fun userLuckScreen() {
         }
     }
 }
+
 
 
 /* @Preview

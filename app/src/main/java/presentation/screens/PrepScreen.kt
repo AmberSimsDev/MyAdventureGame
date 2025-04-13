@@ -74,7 +74,7 @@ fun prepScreen(navController: NavController) {
                 Button(
                     onClick = {
                         if (currentQuestionIndex >= 2) {
-                            navController.navigate(Screen.UserLuckScreen.route)
+                            navController.navigate(Screen.EventScreenOne.route)
                         } else {
                             currentQuestionIndex++
                         }
@@ -90,7 +90,7 @@ fun prepScreen(navController: NavController) {
                 Button(
                     onClick = {
                         if (currentQuestionIndex >= 2) {
-                            navController.navigate(Screen.UserLuckScreen.route)
+                            navController.navigate(Screen.EventScreenOne.route)
                         } else {
                             currentQuestionIndex++
                         }

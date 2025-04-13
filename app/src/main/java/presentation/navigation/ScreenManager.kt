@@ -6,7 +6,9 @@ sealed class Screen (val route: String) {
 
     data object PrepScreen : Screen("PrepScreen")
 
-    data object UserLuckScreen: Screen("UserLuckScreen")
+    data object EventScreenOne: Screen("EventScreenOne")
+
+    data object EventScreenTwo: Screen("EventScreenTwo")
 
 
 }
