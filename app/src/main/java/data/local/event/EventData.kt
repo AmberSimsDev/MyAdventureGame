@@ -1,4 +1,4 @@
-package data
+package data.local.event
 
 object EventData {
     //val normalEvents = ArrayList<String>()
@@ -10,7 +10,7 @@ object EventData {
 
         "After a lovely taxi ride conversation, welcoming you to the city, you arrive  at your " +
                 "hostel just in time for check in. It's super hip and modern just as you'd seen online" +
-                 "When you get to  your room, you hear friendly chatter. What do you decide to do?"
+                "When you get to  your room, you hear friendly chatter. What do you decide to do?"
     )
     private val describeNormalEvent = arrayListOf(
         "Today is the day your life changes forever as you decide to begin a new adventure in the " +

@@ -1,5 +1,7 @@
 package presentation.screens
 
+import ambersimsdev.myadventuregame.R
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,15 +17,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import data.EventData
-import data.User
+import data.local.event.EventData
+import data.local.UserScoreLocalDataSource
 import presentation.navigation.Screen
 
 @Composable
 fun eventScreenOne(navController: NavController) {
-    val currentScore = User.getScore()
+    val currentScore = UserScoreLocalDataSource.getScore()
     var buttonClicked by remember { mutableStateOf(false) }
     var luckyResult by remember {
         mutableStateOf("")
@@ -54,6 +57,10 @@ fun eventScreenOne(navController: NavController) {
             .padding(16.dp), verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.aircraft_bro),
+            contentDescription = "Image of city with trees."
+        )
 //BUTTON CLICKED
         if (buttonClicked) {
             Text(
@@ -86,11 +93,11 @@ fun eventScreenOne(navController: NavController) {
                         currentScore == currentScore
                         luckyResult = EventData.getUnluckyResponseOne(0)
                     } else if (currentScore == 4) {
-                        User.addOneToScore()
+                        UserScoreLocalDataSource.addOneToScore()
                         luckyResult = EventData.getNormalResponseOne(0)
                     } else {
                         luckyResult = EventData.getLuckyResponseOne(0)
-                        User.addTwoToScore()
+                        UserScoreLocalDataSource.addTwoToScore()
                     }
                 }, modifier = Modifier.padding(8.dp), shape = RectangleShape
             ) {
@@ -101,13 +108,13 @@ fun eventScreenOne(navController: NavController) {
             Button(onClick = {
                 buttonClicked = true
                 if (currentScore >= 5) {
-                    User.addOneToScore()
+                    UserScoreLocalDataSource.addOneToScore()
                     luckyResult = EventData.getLuckyResponseOne(1)
                 } else if (currentScore == 4) {
-                    User.addOneToScore()
+                    UserScoreLocalDataSource.addOneToScore()
                     luckyResult = EventData.getNormalResponseOne(1)
                 } else {
-                    User.addOneToScore()
+                    UserScoreLocalDataSource.addOneToScore()
                     luckyResult = EventData.getUnluckyResponseOne(1)
                 }
             }, modifier = Modifier.padding(8.dp), shape = RectangleShape) {
@@ -123,10 +130,10 @@ fun eventScreenOne(navController: NavController) {
                         currentScore == currentScore
                         luckyResult = EventData.getLuckyResponseOne(2)
                     } else if (currentScore == 4) {
-                        User.addTwoToScore()
+                        UserScoreLocalDataSource.addTwoToScore()
                         luckyResult = EventData.getNormalResponseOne(2)
                     } else {
-                        User.addTwoToScore()
+                        UserScoreLocalDataSource.addTwoToScore()
                         luckyResult = EventData.getUnluckyResponseOne(2)
                     }
                 },

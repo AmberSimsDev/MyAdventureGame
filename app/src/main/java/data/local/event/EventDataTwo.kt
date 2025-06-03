@@ -1,4 +1,4 @@
-package data
+package data.local.event
 
 object EventDataTwo {
 
@@ -43,15 +43,15 @@ object EventDataTwo {
 
 
     fun getLuckyHostelResponse(index: Int): String {
-        return EventDataTwo.luckyHostelResult.getOrNull(index) ?: ""
+        return luckyHostelResult.getOrNull(index) ?: ""
     }
 
     fun getNormalHostelResponse(index: Int): String {
-        return EventDataTwo.normalHostelResult.getOrNull(index) ?: ""
+        return normalHostelResult.getOrNull(index) ?: ""
     }
 
     fun getUnluckyHostelResponse(index: Int): String {
-        return EventDataTwo.unLuckyHostelResult.getOrNull(index) ?: ""
+        return unLuckyHostelResult.getOrNull(index) ?: ""
     }
 
 }

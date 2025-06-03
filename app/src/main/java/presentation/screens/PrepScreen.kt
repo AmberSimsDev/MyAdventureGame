@@ -20,8 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import data.PrepQuestionsData
-import data.User
+import data.local.source.PrepQuestionsLocalDataSource
+import data.local.UserScoreLocalDataSource
 import presentation.navigation.Screen
 
 
@@ -38,12 +38,12 @@ const val ClassName = "PrepScreen"
 fun prepScreen(navController: NavController) {
     //SCREEN LOGIC
     //LIST LOGIC
-    Log.w(ClassName, ">>>>>>Your score is ${User.getScore()}")
-    val prepQuestionsList by remember { mutableStateOf(PrepQuestionsData.getPrepQuestions()) }
+    Log.w(ClassName, ">>>>>>Your score is ${UserScoreLocalDataSource.getScore()}")
+    val prepQuestionsList by remember { mutableStateOf(PrepQuestionsLocalDataSource.getPrepQuestions()) }
     var currentQuestionIndex by remember { mutableStateOf(0) }// this is the initial value
     //READY LOGIC
     var isReady by remember { mutableStateOf(false) }
-    val currentScore = User.getScore()
+    val currentScore = UserScoreLocalDataSource.getScore()
 
     //var prepQuestionsList by remember { mutableStateOf(ArrayList<PrepQuestion>()) }
     Column(
@@ -54,7 +54,7 @@ fun prepScreen(navController: NavController) {
     ) {
         if (!isReady) { //THIS IS ONLYYYYYY WHAT WILL BE DISPLAYED
             Text(
-                text = "Now, just a few questions before we begin, ${User.getName()}!",
+                text = "Now, just a few questions before we begin, ${UserScoreLocalDataSource.getName()}!",
                 color = Color.White,
                 modifier = Modifier.padding(32.dp)
             )
@@ -78,7 +78,7 @@ fun prepScreen(navController: NavController) {
                         } else {
                             currentQuestionIndex++
                         }
-                        User.addTwoToScore()
+                        UserScoreLocalDataSource.addTwoToScore()
 
                     },
                     modifier = Modifier.padding(8.dp),

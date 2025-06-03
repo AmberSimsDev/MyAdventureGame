@@ -1,18 +1,10 @@
-package data
+package data.local
 
 import android.util.Log
 
-object User {
+class UserScoreLocalDataSource {
     private var score: Int = 0 //The user will start with this score
-    private var name: String = ""
-//USER NAME SETTERS + GETTERS
-    fun setName(newName: String) {
-        name = newName
-    }
 
-    fun getName(): String {
-        return name
-    }
 //USER SCORE SETTER + GETTER
     fun addTwoToScore() { //If you call only this you will get no answer back
         Log.w("User", "addTwoToScore")

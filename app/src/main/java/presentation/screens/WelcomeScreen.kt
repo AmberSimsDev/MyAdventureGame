@@ -17,17 +17,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import data.User
+import data.local.UserScoreLocalDataSource
 import presentation.navigation.Screen
 
 @Composable
 fun welcomeScreen(navController: NavController) {
-    val currentName = User.getName()
+    val currentName = UserScoreLocalDataSource.getName()
     val name = remember { mutableStateOf(currentName) }
     Column(
         modifier = Modifier
@@ -45,7 +44,7 @@ fun welcomeScreen(navController: NavController) {
         Spacer(modifier = Modifier.padding(16.dp))
         OutlinedTextField(value = name.value, onValueChange = { newName ->
             name.value = newName
-            User.setName(newName)
+            UserScoreLocalDataSource.setName(newName)
         })
         Spacer(modifier = Modifier.padding(16.dp))
         Button(onClick = {
