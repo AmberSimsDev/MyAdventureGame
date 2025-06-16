@@ -1,22 +1,19 @@
 package presentation.viewmodel
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import data.local.entity.PrepQuestionsLocalEntity
-import data.local.source.PrepQuestionsLocalDataSource
 import data.local.source.UserNameLocalDataSource
 import data.local.source.UserScoreLocalDataSource
-import data.repository.PrepQuestionsRepositoryImpl
 import domain.model.PrepQuestions
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class PrepScreenViewModel(private val userScoreLocalDataSource: UserScoreLocalDataSource,
-                          private val userNameLocalDataSource: UserNameLocalDataSource): ViewModel() {
+class EventScreenViewModel(private val userScoreLocalDataSource: UserScoreLocalDataSource,
+                           private val userNameLocalDataSource: UserNameLocalDataSource):ViewModel() {
+    //IS CLICKED
+    private val _buttonClicked = MutableStateFlow(false)
+    val buttonClicked: StateFlow<Boolean> = _buttonClicked
+
+    // FROM PREP SCREEN
     //CURRENT SCORE
     private val _currentScore = MutableStateFlow(userScoreLocalDataSource.getScore())
     val currentScore: StateFlow<Int> = _currentScore
@@ -40,8 +37,8 @@ class PrepScreenViewModel(private val userScoreLocalDataSource: UserScoreLocalDa
     //   //     DETAILED LOGIC  & FUNCTIONS //    //
 
     //SET READY
-    fun setReady() {
-        val isReady = true
+    fun buttonReady() {
+        val buttonClicked = true
     }
 
     //PREP QUESTION LIST
@@ -60,5 +57,3 @@ class PrepScreenViewModel(private val userScoreLocalDataSource: UserScoreLocalDa
         _currentScore.value = userScoreLocalDataSource.getScore()
     }
 }
-
-

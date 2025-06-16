@@ -10,5 +10,7 @@ data class PrepQuestionsLocalEntity (
     val optionOne:String,
     val optionTwo:String,
     val optionResponse:String
-)
+) {
+
+}
 

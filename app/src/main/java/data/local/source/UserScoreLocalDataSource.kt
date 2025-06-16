@@ -1,4 +1,4 @@
-package data.local
+package data.local.source
 
 import android.util.Log
 
@@ -12,15 +12,13 @@ class UserScoreLocalDataSource {
 
     }
 
-    fun getScore(): Int {  //BECAUSE he say return its job is to deliver the data.
-        return score    //Where you call it is where it goes
-
-    }
-
     fun addOneToScore() { //If you call only this you will get no answer back
         Log.w("User", "addOneToScore")
         score += 1  // This adds 2 to the current value of int
 
     }
+    fun getScore(): Int {  //BECAUSE he say return its job is to deliver the data.
+        return score    //Where you call it is where it goes
 
+    }
 }

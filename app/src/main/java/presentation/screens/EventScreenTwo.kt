@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,14 +20,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import data.local.event.EventData
 import data.local.event.EventDataTwo
-import data.local.UserScoreLocalDataSource
+import presentation.viewmodel.EventScreenViewModel
 
 @Composable
-fun eventScreenTwo(navController: NavController){
-    val currentScore = UserScoreLocalDataSource.getScore()
+fun eventScreenTwo(navController: NavController, viewModel: EventScreenViewModel =  viewModel()){
+    val currentScore by viewModel.currentScore.collectAsState()
     var buttonClicked by remember { mutableStateOf(false) }
     var luckyResult by remember {
         mutableStateOf("")
@@ -90,10 +92,10 @@ fun eventScreenTwo(navController: NavController){
                 onClick = {
                     buttonClicked = true
                     if (currentScore <= 4) {
-                        UserScoreLocalDataSource.addTwoToScore()
+                        viewModel.answerSelected(2)
                         luckyResult = EventDataTwo.getUnluckyHostelResponse(0)
                     } else if (currentScore in 5..7) {
-                        UserScoreLocalDataSource.addOneToScore()
+                        viewModel.answerSelected(1)
                         luckyResult = EventDataTwo.getNormalHostelResponse(0)
                     } else {
                         luckyResult = EventDataTwo.getLuckyHostelResponse(0)
@@ -108,13 +110,13 @@ fun eventScreenTwo(navController: NavController){
             Button(onClick = {
                 buttonClicked = true
                 if (currentScore >= 8) {
-                    UserScoreLocalDataSource.addOneToScore()
+                    viewModel.answerSelected(1)
                     luckyResult = EventDataTwo.getLuckyHostelResponse(1)
                 } else if (currentScore in 5..7) {
-                    UserScoreLocalDataSource.addOneToScore()
+                    viewModel.answerSelected(1)
                     luckyResult = EventDataTwo.getNormalHostelResponse(1)
                 } else {
-                    UserScoreLocalDataSource.addOneToScore()
+                    viewModel.answerSelected(1)
                     luckyResult = EventDataTwo.getUnluckyHostelResponse(1)
                 }
             }, modifier = Modifier.padding(8.dp), shape = RectangleShape) {
@@ -130,10 +132,10 @@ fun eventScreenTwo(navController: NavController){
                         currentScore == currentScore
                         luckyResult = EventDataTwo.getLuckyHostelResponse(2)
                     } else if (currentScore == 4) {
-                        UserScoreLocalDataSource.addTwoToScore()
+                        viewModel.answerSelected(2)
                         luckyResult = EventDataTwo.getNormalHostelResponse(2)
                     } else {
-                        UserScoreLocalDataSource.addTwoToScore()
+                        viewModel.answerSelected(2)
                         luckyResult = EventDataTwo.getUnluckyHostelResponse(2)
                     }
                 },

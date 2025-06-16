@@ -11,23 +11,28 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import data.local.UserScoreLocalDataSource
 import presentation.navigation.Screen
+import presentation.viewmodel.WelcomeScreenViewModel
 
 @Composable
-fun welcomeScreen(navController: NavController) {
-    val currentName = UserScoreLocalDataSource.getName()
-    val name = remember { mutableStateOf(currentName) }
+fun welcomeScreen(navController: NavController,
+                  viewModel:WelcomeScreenViewModel = viewModel()) {
+    //MESSAGE FROM VIEW MODEL:
+    val name by viewModel.name.collectAsState()
+    //MESSAGE END
+
+    //UI ONLY FOLLOWS
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,14 +47,16 @@ fun welcomeScreen(navController: NavController) {
         )
         Text(text = "Welcome! Let's start with a name!", color = Color.White)
         Spacer(modifier = Modifier.padding(16.dp))
-        OutlinedTextField(value = name.value, onValueChange = { newName ->
-            name.value = newName
-            UserScoreLocalDataSource.setName(newName)
-        })
+
+
+        OutlinedTextField(value = name,
+            onValueChange = viewModel::onNameChange)
+
         Spacer(modifier = Modifier.padding(16.dp))
+
         Button(onClick = {
             if (
-                name.value.isNotBlank()) {
+                viewModel.isNameValid()) {
                 navController.navigate(Screen.PrepScreen.route)
             }
         }

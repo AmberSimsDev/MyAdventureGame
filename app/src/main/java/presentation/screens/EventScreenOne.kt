@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,18 +20,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import data.local.event.EventData
-import data.local.UserScoreLocalDataSource
 import presentation.navigation.Screen
+import presentation.viewmodel.EventScreenViewModel
 
 @Composable
-fun eventScreenOne(navController: NavController) {
-    val currentScore = UserScoreLocalDataSource.getScore()
-    var buttonClicked by remember { mutableStateOf(false) }
+fun eventScreenOne(navController: NavController, viewModel: EventScreenViewModel =  viewModel(), ) {
+    val currentScore by viewModel.currentScore.collectAsState()
+    val buttonClicked by viewModel.buttonClicked.collectAsState()
     var luckyResult by remember {
-        mutableStateOf("")
-    }
+        mutableStateOf("")}
+
     /*  var message = ""
       message = if (currentScore >= 5) {
           EventData.getLuckyEvent()
@@ -88,16 +90,16 @@ fun eventScreenOne(navController: NavController) {
             //BUTTON NUMBER 1
             Button(
                 onClick = {
-                    buttonClicked = true
+                    buttonClicked
                     if (currentScore <= 3) {
                         currentScore == currentScore
                         luckyResult = EventData.getUnluckyResponseOne(0)
                     } else if (currentScore == 4) {
-                        UserScoreLocalDataSource.addOneToScore()
+                        viewModel.answerSelected(1)
                         luckyResult = EventData.getNormalResponseOne(0)
                     } else {
                         luckyResult = EventData.getLuckyResponseOne(0)
-                        UserScoreLocalDataSource.addTwoToScore()
+                        viewModel.answerSelected(2)
                     }
                 }, modifier = Modifier.padding(8.dp), shape = RectangleShape
             ) {
@@ -106,15 +108,15 @@ fun eventScreenOne(navController: NavController) {
 
             //BUTTON NUMBER 2
             Button(onClick = {
-                buttonClicked = true
+                buttonClicked //= true
                 if (currentScore >= 5) {
-                    UserScoreLocalDataSource.addOneToScore()
+                    viewModel.answerSelected(1)
                     luckyResult = EventData.getLuckyResponseOne(1)
                 } else if (currentScore == 4) {
-                    UserScoreLocalDataSource.addOneToScore()
+                    viewModel.answerSelected(1)
                     luckyResult = EventData.getNormalResponseOne(1)
                 } else {
-                    UserScoreLocalDataSource.addOneToScore()
+                    viewModel.answerSelected(1)
                     luckyResult = EventData.getUnluckyResponseOne(1)
                 }
             }, modifier = Modifier.padding(8.dp), shape = RectangleShape) {
@@ -125,15 +127,15 @@ fun eventScreenOne(navController: NavController) {
             //BUTTON NUMBER 3
             Button(
                 onClick = {
-                    buttonClicked = true
+                    buttonClicked //= true
                     if (currentScore >= 5) {
                         currentScore == currentScore
                         luckyResult = EventData.getLuckyResponseOne(2)
                     } else if (currentScore == 4) {
-                        UserScoreLocalDataSource.addTwoToScore()
+                        viewModel.answerSelected(2)
                         luckyResult = EventData.getNormalResponseOne(2)
                     } else {
-                        UserScoreLocalDataSource.addTwoToScore()
+                        viewModel.answerSelected(2)
                         luckyResult = EventData.getUnluckyResponseOne(2)
                     }
                 },

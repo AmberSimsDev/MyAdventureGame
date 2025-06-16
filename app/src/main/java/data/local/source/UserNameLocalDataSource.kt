@@ -1,4 +1,4 @@
-package data.local
+package data.local.source
 
 class UserNameLocalDataSource {
     private var name: String = ""
@@ -6,7 +6,6 @@ class UserNameLocalDataSource {
     fun setName(newName: String) {
         name = newName
     }
-
     fun getName(): String {
         return name
     }
