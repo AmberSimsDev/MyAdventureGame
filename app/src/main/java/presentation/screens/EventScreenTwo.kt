@@ -20,10 +20,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import data.local.event.EventData
-import data.local.event.EventDataTwo
+import data.local.event.EventA
+import data.local.event.EventB
+import data.local.event.LuckLevel
 import data.local.source.UserNameLocalDataSource
 import data.local.source.UserScoreLocalDataSource
 import presentation.viewmodel.EventScreenViewModel
@@ -54,11 +54,11 @@ fun eventScreenTwo(navController: NavController, userScoreLocalDataSource: UserS
     //DESCRIPTION MESSAGE  GETS THE MESSAGES OF EVENTS THE USER WILL READ DEPENDING ON THEIR LUCK
     var descriptionMessage = ""
     descriptionMessage = if (currentScore >= 8) {
-        EventData.getLuckyEventDescription(1)
+        EventB.getHostelEventDescription(LuckLevel.LUCKY,1)
     } else if (currentScore in 5..7 ) { ///make sure to use for optimization. dont just use IFs
-        EventData.getNormalEventDescription(1)
+        EventB.getHostelEventDescription(LuckLevel.NORMAL, 1)
     } else {
-        EventData.getUnluckyEventDescription(1)
+        EventB.getHostelEventDescription(LuckLevel.UNLUCKY,1)
     }
 //WHEN THE USER MAKES A CHOICE THEY WILL READ A DESCRIPTION
 
@@ -102,17 +102,17 @@ fun eventScreenTwo(navController: NavController, userScoreLocalDataSource: UserS
                     buttonClicked = true
                     if (currentScore <= 4) {
                         viewModel.answerSelected(2)
-                        luckyResult = EventDataTwo.getUnluckyHostelResponse(0)
+                        luckyResult = EventB.getLuckyResponseB(LuckLevel.UNLUCKY,0)
                     } else if (currentScore in 5..7) {
                         viewModel.answerSelected(1)
-                        luckyResult = EventDataTwo.getNormalHostelResponse(0)
+                        luckyResult = EventB.getLuckyResponseB(LuckLevel.NORMAL,0)
                     } else {
-                        luckyResult = EventDataTwo.getLuckyHostelResponse(0)
+                        luckyResult = EventB.getLuckyResponseB(LuckLevel.LUCKY,0)
                         currentScore == currentScore
                     }
                 }, modifier = Modifier.padding(8.dp), shape = RectangleShape
             ) {
-                Text(text = EventDataTwo.getHostelEventResponses(0))
+                Text(text = EventB.getHostelResponse(0))
             }
 
             //BUTTON NUMBER 2
@@ -120,16 +120,16 @@ fun eventScreenTwo(navController: NavController, userScoreLocalDataSource: UserS
                 buttonClicked = true
                 if (currentScore >= 8) {
                     viewModel.answerSelected(1)
-                    luckyResult = EventDataTwo.getLuckyHostelResponse(1)
+                    luckyResult = EventB.getLuckyResponseB(LuckLevel.LUCKY,1)
                 } else if (currentScore in 5..7) {
                     viewModel.answerSelected(1)
-                    luckyResult = EventDataTwo.getNormalHostelResponse(1)
+                    luckyResult = EventB.getLuckyResponseB(LuckLevel.NORMAL,1)
                 } else {
                     viewModel.answerSelected(1)
-                    luckyResult = EventDataTwo.getUnluckyHostelResponse(1)
+                    luckyResult = EventB.getLuckyResponseB(LuckLevel.UNLUCKY,1)
                 }
             }, modifier = Modifier.padding(8.dp), shape = RectangleShape) {
-                Text(text = EventDataTwo.getHostelEventResponses(1))
+                Text(text = EventB.getHostelResponse(1))
             }
 
 
@@ -139,19 +139,19 @@ fun eventScreenTwo(navController: NavController, userScoreLocalDataSource: UserS
                     buttonClicked = true
                     if (currentScore >= 5) {
                         currentScore == currentScore
-                        luckyResult = EventDataTwo.getLuckyHostelResponse(2)
+                        luckyResult = EventB.getLuckyResponseB(LuckLevel.LUCKY,2)
                     } else if (currentScore == 5) {
                         viewModel.answerSelected(1)
-                        luckyResult = EventDataTwo.getNormalHostelResponse(2)
+                        luckyResult = EventB.getLuckyResponseB(LuckLevel.NORMAL,2)
                     } else {
                         currentScore == currentScore
-                        luckyResult = EventDataTwo.getUnluckyHostelResponse(2)
+                        luckyResult = EventB.getLuckyResponseB(LuckLevel.UNLUCKY,2)
                     }
                 },
                 modifier = Modifier.padding(8.dp),
                 shape = RectangleShape
             ) {
-                Text(text = EventDataTwo.getHostelEventResponses(2))
+                Text(text = EventB.getHostelResponse(2))
             }
             Text(text = "Current Score is ${currentScore.toString()}")
         }
