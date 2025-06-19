@@ -24,10 +24,19 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import data.local.event.EventData
 import data.local.event.EventDataTwo
+import data.local.source.UserNameLocalDataSource
+import data.local.source.UserScoreLocalDataSource
 import presentation.viewmodel.EventScreenViewModel
 
 @Composable
-fun eventScreenTwo(navController: NavController, viewModel: EventScreenViewModel =  viewModel()){
+fun eventScreenTwo(navController: NavController, userScoreLocalDataSource: UserScoreLocalDataSource,
+                   userNameLocalDataSource: UserNameLocalDataSource){
+
+    val viewModel = remember {
+        EventScreenViewModel(
+            userScoreLocalDataSource = userScoreLocalDataSource,
+            userNameLocalDataSource = userNameLocalDataSource)}
+
     val currentScore by viewModel.currentScore.collectAsState()
     var buttonClicked by remember { mutableStateOf(false) }
     var luckyResult by remember {
@@ -61,7 +70,7 @@ fun eventScreenTwo(navController: NavController, viewModel: EventScreenViewModel
     ) {
         Image(
             painter = painterResource(id = R.drawable.hostel_image),
-            contentDescription = "Image of city with trees."
+            contentDescription = "Image of inside a hostel."
         )
 //BUTTON CLICKED
         if (buttonClicked) {
@@ -131,11 +140,11 @@ fun eventScreenTwo(navController: NavController, viewModel: EventScreenViewModel
                     if (currentScore >= 5) {
                         currentScore == currentScore
                         luckyResult = EventDataTwo.getLuckyHostelResponse(2)
-                    } else if (currentScore == 4) {
-                        viewModel.answerSelected(2)
+                    } else if (currentScore == 5) {
+                        viewModel.answerSelected(1)
                         luckyResult = EventDataTwo.getNormalHostelResponse(2)
                     } else {
-                        viewModel.answerSelected(2)
+                        currentScore == currentScore
                         luckyResult = EventDataTwo.getUnluckyHostelResponse(2)
                     }
                 },

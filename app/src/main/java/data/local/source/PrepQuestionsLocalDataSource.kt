@@ -12,13 +12,13 @@ import data.local.entity.PrepQuestionsLocalEntity
 class PrepQuestionsLocalDataSource{
     fun getPrepQuestions():List<PrepQuestionsLocalEntity>{
         return listOf(
-            PrepQuestionsLocalEntity(1, "Are you from the EU?", "Yes.",
+            PrepQuestionsLocalEntity(0, "Are you from the EU?", "Yes.",
                 "No.", "Alrighty then! Next question!"),
 
-            PrepQuestionsLocalEntity(2, "Would you consider yourself lucky?",
+            PrepQuestionsLocalEntity(1, "Would you consider yourself lucky?",
                 "Yes.", "No.", "Alrighty then! Next question!"),
 
-            PrepQuestionsLocalEntity(3, "Do you consider yourself street smart?",
+            PrepQuestionsLocalEntity(2, "Do you consider yourself street smart?",
                 "Yes.", "No.", "All done! Time to begin! ")
         )
 

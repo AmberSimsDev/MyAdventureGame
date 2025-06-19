@@ -17,6 +17,11 @@ class UserScoreLocalDataSource {
         score += 1  // This adds 2 to the current value of int
 
     }
+    fun addZeroToScore() { //If you call only this you will get no answer back
+        Log.w("User", "addOneToScore")
+        score += 0 // This adds 2 to the current value of int
+
+    }
     fun getScore(): Int {  //BECAUSE he say return its job is to deliver the data.
         return score    //Where you call it is where it goes
 

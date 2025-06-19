@@ -9,11 +9,10 @@ import kotlinx.coroutines.flow.StateFlow
 
 class EventScreenViewModel(private val userScoreLocalDataSource: UserScoreLocalDataSource,
                            private val userNameLocalDataSource: UserNameLocalDataSource):ViewModel() {
-    //IS CLICKED
-    private val _buttonClicked = MutableStateFlow(false)
-    val buttonClicked: StateFlow<Boolean> = _buttonClicked
+    //IS CLICKED TODO: work on button when clicked
+    private var _buttonClicked = MutableStateFlow(false)
+    var buttonClicked: StateFlow<Boolean> = _buttonClicked
 
-    // FROM PREP SCREEN
     //CURRENT SCORE
     private val _currentScore = MutableStateFlow(userScoreLocalDataSource.getScore())
     val currentScore: StateFlow<Int> = _currentScore
@@ -36,16 +35,10 @@ class EventScreenViewModel(private val userScoreLocalDataSource: UserScoreLocalD
 
     //   //     DETAILED LOGIC  & FUNCTIONS //    //
 
-    //SET READY
-    fun buttonReady() {
-        val buttonClicked = true
-    }
+   fun isClicked(){
+       _buttonClicked.value = true
+   }
 
-    //PREP QUESTION LIST
-    fun loadQuestions(prepList: List<PrepQuestions>) {
-        val questions = prepList
-    }
-    //ADD TO SCORE
     fun answerSelected(option: Int) {
         if (_currentQuestionIndex.value >= 2) return
         _currentQuestionIndex.value++

@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,12 +23,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import data.local.source.UserNameLocalDataSource
 import presentation.navigation.Screen
+import presentation.viewmodel.PrepScreenViewModel
 import presentation.viewmodel.WelcomeScreenViewModel
 
 @Composable
-fun welcomeScreen(navController: NavController,
-                  viewModel:WelcomeScreenViewModel = viewModel()) {
+fun welcomeScreen(navController: NavController,  userNameLocalDataSource: UserNameLocalDataSource) {
+
+
+    val viewModel = remember { WelcomeScreenViewModel(userNameLocalDataSource = userNameLocalDataSource) }
     //MESSAGE FROM VIEW MODEL:
     val name by viewModel.name.collectAsState()
     //MESSAGE END
@@ -58,6 +63,7 @@ fun welcomeScreen(navController: NavController,
             if (
                 viewModel.isNameValid()) {
                 navController.navigate(Screen.PrepScreen.route)
+
             }
         }
         ) {
@@ -72,5 +78,5 @@ fun welcomeScreen(navController: NavController,
 @Preview
 @Composable
 fun welcomeScreenPreview() {
-    welcomeScreen(navController = rememberNavController())
+    welcomeScreen(navController = rememberNavController(),UserNameLocalDataSource())
 }

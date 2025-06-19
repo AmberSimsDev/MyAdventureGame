@@ -1,22 +1,18 @@
 package presentation.viewmodel
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import data.local.entity.PrepQuestionsLocalEntity
 import data.local.source.PrepQuestionsLocalDataSource
 import data.local.source.UserNameLocalDataSource
 import data.local.source.UserScoreLocalDataSource
-import data.repository.PrepQuestionsRepositoryImpl
 import domain.model.PrepQuestions
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class PrepScreenViewModel(private val userScoreLocalDataSource: UserScoreLocalDataSource,
-                          private val userNameLocalDataSource: UserNameLocalDataSource): ViewModel() {
+                          private val userNameLocalDataSource: UserNameLocalDataSource,
+                          private val prepQuestionsLocalDataSource: PrepQuestionsLocalDataSource): ViewModel() {
+
     //CURRENT SCORE
     private val _currentScore = MutableStateFlow(userScoreLocalDataSource.getScore())
     val currentScore: StateFlow<Int> = _currentScore
@@ -26,8 +22,9 @@ class PrepScreenViewModel(private val userScoreLocalDataSource: UserScoreLocalDa
     val isReady: StateFlow<Boolean> = _isReady
 
     //QUESTION LIST
-    private val _questions = MutableStateFlow<List<PrepQuestions>>(emptyList())
-    val questions: StateFlow<List<PrepQuestions>> = _questions
+    private val _questions = MutableStateFlow<List<PrepQuestionsLocalEntity>>(emptyList())
+    val questions: StateFlow<List<PrepQuestionsLocalEntity>> = _questions
+
 
     //QUESTION INDEX
     private val _currentQuestionIndex = MutableStateFlow(0)
@@ -35,6 +32,10 @@ class PrepScreenViewModel(private val userScoreLocalDataSource: UserScoreLocalDa
 
     // USER NAME
     val userName = userNameLocalDataSource.getName()
+
+    //NAVIGATION
+    private val _navigateToNextScreen = MutableStateFlow(false)
+    val navigateToNextScreen: StateFlow<Boolean> = _navigateToNextScreen
 
 
     //   //     DETAILED LOGIC  & FUNCTIONS //    //
@@ -45,17 +46,23 @@ class PrepScreenViewModel(private val userScoreLocalDataSource: UserScoreLocalDa
     }
 
     //PREP QUESTION LIST
-    fun loadQuestions(prepList: List<PrepQuestions>) {
-        val questions = prepList
+    fun loadQuestions() {
+        _questions.value = prepQuestionsLocalDataSource.getPrepQuestions()
+        _isReady.value = true
     }
     //ADD TO SCORE
-    fun answerSelected(option: Int) {
-        if (_currentQuestionIndex.value >= 2) return
-        _currentQuestionIndex.value++
+    fun answerSelected(optionValue: Int) { //ADD LOGIC HERE AND NOT IN UI
+        _currentScore.value += optionValue
+        if (_currentQuestionIndex.value >= 2) {
+            _navigateToNextScreen.value = true
+        }else{
+            _currentQuestionIndex.value+= 1
+        }
 
         // Add to score
-        if (option == 2) userScoreLocalDataSource.addTwoToScore()
-        if (option == 1) userScoreLocalDataSource.addOneToScore()
+        if (optionValue == 2) userScoreLocalDataSource.addTwoToScore()
+        if (optionValue == 1) userScoreLocalDataSource.addOneToScore()
+        if (optionValue == 0) userScoreLocalDataSource.addZeroToScore()
         //if(option is 0 on the index nothing is added to the score
         _currentScore.value = userScoreLocalDataSource.getScore()
     }

@@ -18,4 +18,5 @@ class WelcomeScreenViewModel(private val userNameLocalDataSource: UserNameLocalD
     fun isNameValid(): Boolean {
         return _name.value.isNotBlank()
     }
+
 }

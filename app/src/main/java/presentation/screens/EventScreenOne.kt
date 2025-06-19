@@ -23,12 +23,23 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import data.local.event.EventData
+import data.local.source.UserNameLocalDataSource
+import data.local.source.UserScoreLocalDataSource
 import presentation.navigation.Screen
 import presentation.viewmodel.EventScreenViewModel
+import presentation.viewmodel.PrepScreenViewModel
 
 @Composable
-fun eventScreenOne(navController: NavController, viewModel: EventScreenViewModel =  viewModel(), ) {
+fun eventScreenOne(navController: NavController, userScoreLocalDataSource: UserScoreLocalDataSource,
+                   userNameLocalDataSource: UserNameLocalDataSource) {
+
+    val viewModel = remember {
+        EventScreenViewModel(
+            userScoreLocalDataSource = userScoreLocalDataSource,
+            userNameLocalDataSource = userNameLocalDataSource)}
+
     val currentScore by viewModel.currentScore.collectAsState()
+    //TODO: Fix the button navigation when clicked on
     val buttonClicked by viewModel.buttonClicked.collectAsState()
     var luckyResult by remember {
         mutableStateOf("")}
@@ -90,16 +101,17 @@ fun eventScreenOne(navController: NavController, viewModel: EventScreenViewModel
             //BUTTON NUMBER 1
             Button(
                 onClick = {
-                    buttonClicked
+                    viewModel.isClicked()
                     if (currentScore <= 3) {
-                        currentScore == currentScore
+                        viewModel.answerSelected(2)
                         luckyResult = EventData.getUnluckyResponseOne(0)
                     } else if (currentScore == 4) {
                         viewModel.answerSelected(1)
                         luckyResult = EventData.getNormalResponseOne(0)
                     } else {
                         luckyResult = EventData.getLuckyResponseOne(0)
-                        viewModel.answerSelected(2)
+                        currentScore == currentScore
+
                     }
                 }, modifier = Modifier.padding(8.dp), shape = RectangleShape
             ) {
@@ -108,7 +120,7 @@ fun eventScreenOne(navController: NavController, viewModel: EventScreenViewModel
 
             //BUTTON NUMBER 2
             Button(onClick = {
-                buttonClicked //= true
+                viewModel.isClicked()
                 if (currentScore >= 5) {
                     viewModel.answerSelected(1)
                     luckyResult = EventData.getLuckyResponseOne(1)
@@ -127,7 +139,7 @@ fun eventScreenOne(navController: NavController, viewModel: EventScreenViewModel
             //BUTTON NUMBER 3
             Button(
                 onClick = {
-                    buttonClicked //= true
+                    viewModel.isClicked()
                     if (currentScore >= 5) {
                         currentScore == currentScore
                         luckyResult = EventData.getLuckyResponseOne(2)
@@ -135,7 +147,7 @@ fun eventScreenOne(navController: NavController, viewModel: EventScreenViewModel
                         viewModel.answerSelected(2)
                         luckyResult = EventData.getNormalResponseOne(2)
                     } else {
-                        viewModel.answerSelected(2)
+                        currentScore == currentScore
                         luckyResult = EventData.getUnluckyResponseOne(2)
                     }
                 },
