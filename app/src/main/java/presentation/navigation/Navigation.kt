@@ -10,8 +10,11 @@ import androidx.navigation.compose.rememberNavController
 import data.local.source.PrepQuestionsLocalDataSource
 import data.local.source.UserNameLocalDataSource
 import data.local.source.UserScoreLocalDataSource
+import presentation.screens.eventScreenFour
 import presentation.screens.eventScreenOne
+import presentation.screens.eventScreenThree
 import presentation.screens.eventScreenTwo
+import presentation.screens.randomEventScreen
 
 @Composable
 fun appNav() {
@@ -40,6 +43,21 @@ fun appNav() {
         }
         composable(Screen.EventScreenTwo.route){
             eventScreenTwo(navController= navController,
+                userScoreLocalDataSource = userScoreLocalDataSource,
+                userNameLocalDataSource = userNameLocalDataSource)
+        }
+        composable(Screen.EventScreenThree.route){
+            eventScreenThree(navController= navController,
+                userScoreLocalDataSource = userScoreLocalDataSource,
+                userNameLocalDataSource = userNameLocalDataSource)
+        }
+        composable(Screen.EventScreenFour.route){
+            eventScreenFour(navController= navController,
+                userScoreLocalDataSource = userScoreLocalDataSource,
+                userNameLocalDataSource = userNameLocalDataSource)
+        }
+        composable(Screen.RandomEventScreen.route){
+            randomEventScreen(navController= navController,
                 userScoreLocalDataSource = userScoreLocalDataSource,
                 userNameLocalDataSource = userNameLocalDataSource)
         }

@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import data.local.event.EventA
+import data.local.event.EventC
 import data.local.event.LuckLevel
 import data.local.source.UserNameLocalDataSource
 import data.local.source.UserScoreLocalDataSource
@@ -29,36 +29,30 @@ import presentation.navigation.Screen
 import presentation.viewmodel.EventScreenViewModel
 
 @Composable
-fun eventScreenOne(navController: NavController, userScoreLocalDataSource: UserScoreLocalDataSource,
-                   userNameLocalDataSource: UserNameLocalDataSource) {
+fun eventScreenThree(navController: NavController, userScoreLocalDataSource: UserScoreLocalDataSource,
+                   userNameLocalDataSource: UserNameLocalDataSource
+) {
 
     val viewModel = remember {
         EventScreenViewModel(
             userScoreLocalDataSource = userScoreLocalDataSource,
-            userNameLocalDataSource = userNameLocalDataSource)}
+            userNameLocalDataSource = userNameLocalDataSource)
+    }
 
     val currentScore by viewModel.currentScore.collectAsState()
     val buttonClicked by viewModel.buttonClicked.collectAsState()
     var luckyResult by remember {
-        mutableStateOf("")}
-
-    /*  var message = ""
-      message = if (currentScore >= 5) {
-          EventData.getLuckyEvent()
-      } else if (currentScore == 4) { ///make sure to use for optimization. dont just use IFs
-          EventData.getNormalEvent()
-      } else {
-          EventData.getUnluckyEvent()
-      }*/
+        mutableStateOf("")
+    }
 
     //DESCRIPTION MESSAGE  GETS THE MESSAGES OF EVENTS THE USER WILL READ DEPENDING ON THEIR LUCK
     var descriptionMessage = ""
-    descriptionMessage = if (currentScore >= 5) {
-        EventA.getLuckyEventDescription(LuckLevel.LUCKY,0)
-    } else if (currentScore == 4) { ///make sure to use for optimization.  just use IFs
-        EventA.getLuckyEventDescription(LuckLevel.NORMAL,0)
+    descriptionMessage = if (currentScore >= 8) {
+        EventC.getFirstNightEventDescription(LuckLevel.LUCKY,0)
+    } else if (currentScore in 6..7) { ///make sure to use for optimization.  just use IFs
+        EventC.getFirstNightEventDescription(LuckLevel.NORMAL,0)
     } else {
-        EventA.getLuckyEventDescription(LuckLevel.UNLUCKY,0)
+        EventC.getFirstNightEventDescription(LuckLevel.UNLUCKY,0)
     }
 //WHEN THE USER MAKES A CHOICE THEY WILL READ A DESCRIPTION
 
@@ -69,9 +63,10 @@ fun eventScreenOne(navController: NavController, userScoreLocalDataSource: UserS
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.aircraft_bro),
-            contentDescription = "Image of city with trees."
+            painter = painterResource(id = R.drawable.firstnight),
+            contentDescription = "Image of moon in night sky."
         )
+
 //BUTTON CLICKED
         if (buttonClicked) {
             Text(
@@ -80,8 +75,8 @@ fun eventScreenOne(navController: NavController, userScoreLocalDataSource: UserS
                 modifier = Modifier.padding(16.dp)
             )
             Button(onClick = {
-                if (buttonClicked) {
-                    navController.navigate(Screen.EventScreenTwo.route)
+               if (buttonClicked) {
+                    navController.navigate(Screen.EventScreenFour.route)
                 }
             }) {
                 Text("Continue")
@@ -100,20 +95,20 @@ fun eventScreenOne(navController: NavController, userScoreLocalDataSource: UserS
             Button(
                 onClick = {
                     viewModel.isClicked()
-                    if (currentScore <= 3) {
-                        viewModel.answerSelected(2)
-                        luckyResult = EventA.getLuckyResponseA(LuckLevel.UNLUCKY, 0)
-                    } else if (currentScore == 4) {
+                    if (currentScore <= 5) {
+                        currentScore == currentScore
+                        luckyResult = EventC.getLuckyResponseC(LuckLevel.UNLUCKY, 0)
+                    } else if (currentScore in 6..7) {
                         viewModel.answerSelected(1)
-                        luckyResult = EventA.getLuckyResponseA(LuckLevel.NORMAL, 0)
+                        luckyResult = EventC.getLuckyResponseC(LuckLevel.NORMAL, 0)
                     } else {
-                        luckyResult = EventA.getLuckyResponseA(LuckLevel.LUCKY, 0)
+                        luckyResult = EventC.getLuckyResponseC(LuckLevel.LUCKY, 0)
                         currentScore == currentScore
 
                     }
                 }, modifier = Modifier.padding(8.dp), shape = RectangleShape
             ) {
-                Text(text = EventA.getFlightResponses(0))
+                Text(text = EventC.getFirstNightResponse(0))
             }
 
             //BUTTON NUMBER 2
@@ -121,16 +116,16 @@ fun eventScreenOne(navController: NavController, userScoreLocalDataSource: UserS
                 viewModel.isClicked()
                 if (currentScore >= 5) {
                     viewModel.answerSelected(1)
-                    luckyResult = EventA.getLuckyResponseA(LuckLevel.LUCKY, 1)
+                    luckyResult = EventC.getLuckyResponseC(LuckLevel.LUCKY, 1)
                 } else if (currentScore == 4) {
                     viewModel.answerSelected(1)
-                    luckyResult = EventA.getLuckyResponseA(LuckLevel.NORMAL, 1)
+                    luckyResult = EventC.getLuckyResponseC(LuckLevel.NORMAL, 1)
                 } else {
                     viewModel.answerSelected(1)
-                    luckyResult = EventA.getLuckyResponseA(LuckLevel.UNLUCKY, 1)
+                    luckyResult = EventC.getLuckyResponseC(LuckLevel.UNLUCKY, 1)
                 }
             }, modifier = Modifier.padding(8.dp), shape = RectangleShape) {
-                Text(text = EventA.getFlightResponses(1))
+                Text(text = EventC.getFirstNightResponse(1))
             }
 
 
@@ -138,31 +133,25 @@ fun eventScreenOne(navController: NavController, userScoreLocalDataSource: UserS
             Button(
                 onClick = {
                     viewModel.isClicked()
+
                     if (currentScore >= 5) {
                         viewModel.answerSelected(2)
-                        luckyResult = EventA.getLuckyResponseA(LuckLevel.LUCKY, 2)
+                        luckyResult = EventC.getLuckyResponseC(LuckLevel.LUCKY, 2)
                     } else if (currentScore == 4) {
                         viewModel.answerSelected(2)
-                        luckyResult = EventA.getLuckyResponseA(LuckLevel.NORMAL, 2)
+                        luckyResult = EventC.getLuckyResponseC(LuckLevel.NORMAL, 2)
                     } else {
                         currentScore == currentScore
-                        luckyResult = EventA.getLuckyResponseA(LuckLevel.UNLUCKY, 2)
+                        luckyResult = EventC.getLuckyResponseC(LuckLevel.UNLUCKY, 2)
                     }
                 },
                 modifier = Modifier.padding(8.dp),
                 shape = RectangleShape
             ) {
-                Text(text = EventA.getFlightResponses(2))
+
+                Text(text = EventC.getFirstNightResponse(2))
             }
             Text(text = "Current Score is ${currentScore.toString()}")
         }
     }
 }
-
-
-
-/* @Preview
- @Composable
- fun actionScreenPreview() {
-     userLuckScreen()
- }*/

@@ -26,6 +26,7 @@ import data.local.event.EventB
 import data.local.event.LuckLevel
 import data.local.source.UserNameLocalDataSource
 import data.local.source.UserScoreLocalDataSource
+import presentation.navigation.Screen
 import presentation.viewmodel.EventScreenViewModel
 
 @Composable
@@ -42,23 +43,15 @@ fun eventScreenTwo(navController: NavController, userScoreLocalDataSource: UserS
     var luckyResult by remember {
         mutableStateOf("")
     }
-    /*  var message = ""
-      message = if (currentScore >= 5) {
-          EventData.getLuckyEvent()
-      } else if (currentScore == 4) { ///make sure to use for optimization. dont just use IFs
-          EventData.getNormalEvent()
-      } else {
-          EventData.getUnluckyEvent()
-      }*/
 
     //DESCRIPTION MESSAGE  GETS THE MESSAGES OF EVENTS THE USER WILL READ DEPENDING ON THEIR LUCK
     var descriptionMessage = ""
     descriptionMessage = if (currentScore >= 8) {
-        EventB.getHostelEventDescription(LuckLevel.LUCKY,1)
+        EventB.getHostelEventDescription(LuckLevel.LUCKY,0)
     } else if (currentScore in 5..7 ) { ///make sure to use for optimization. dont just use IFs
-        EventB.getHostelEventDescription(LuckLevel.NORMAL, 1)
+        EventB.getHostelEventDescription(LuckLevel.NORMAL, 0)
     } else {
-        EventB.getHostelEventDescription(LuckLevel.UNLUCKY,1)
+        EventB.getHostelEventDescription(LuckLevel.UNLUCKY,0)
     }
 //WHEN THE USER MAKES A CHOICE THEY WILL READ A DESCRIPTION
 
@@ -80,9 +73,9 @@ fun eventScreenTwo(navController: NavController, userScoreLocalDataSource: UserS
                 modifier = Modifier.padding(16.dp)
             )
             Button(onClick = {
-              /*  if (buttonClicked) {
-                    navController.navigate(Screen.EventScreenOne.route)
-                }*/
+                if (buttonClicked) {
+                    navController.navigate(Screen.EventScreenThree.route)
+                }
             }) {
                 Text("Continue")
             }
